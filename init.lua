@@ -31,6 +31,7 @@ require("lazy").setup({
           "hrsh7th/cmp-cmdline",
       }
   },
+  "sindrets/diffview.nvim",
   "lewis6991/gitsigns.nvim",
   "neovim/nvim-lspconfig",
   {
