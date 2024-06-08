@@ -29,6 +29,7 @@ require("lazy").setup({
 			"hrsh7th/cmp-buffer",
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
+			"saadparwaiz1/cmp_luasnip",
 		},
 	},
 	{
@@ -50,6 +51,10 @@ require("lazy").setup({
 				},
 			})
 		end,
+	},
+	{
+		"L3MON4D3/LuaSnip",
+		version = "v2.*",
 	},
 	{
 		"williamboman/mason.nvim",
@@ -112,7 +117,7 @@ local cmp = require("cmp")
 cmp.setup({
 	snippet = {
 		expand = function(args)
-			vim.snippet.expand(args.body)
+			require("luasnip").lsp_expand(args.body)
 		end,
 	},
 	window = {},
@@ -123,6 +128,12 @@ cmp.setup({
 		["<C-e>"] = cmp.mapping.abort(),
 		["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
 	}),
+	sources = cmp.config.sources({
+		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
+	}, {
+		{ name = "buffer" },
+	}),
 })
 
 -- LSP
@@ -132,7 +143,7 @@ local lspconfig = require("lspconfig")
 
 lspconfig.rust_analyzer.setup({
 	on_attach = function(client, bufnr)
-		vim.lsp.inlay_hint_enable(true, { bufnr = bufnr })
+		vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
 	end,
 	settings = {
 		["rust-analyzer"] = {
