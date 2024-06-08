@@ -1,0 +1,11 @@
+npm i -g @vue/language-server
+npm i -g @vue/typescript-plugin
+npm i -g typescript-language-server typescript
+rustup component add rust-analyzer
+npm i -g tree-sitter-cli
+npm i -g neovim
+pip install neovim
+
+ripgrep: see https://github.com/BurntSushi/ripgrep?tab=readme-ov-file#installation
+fd: see https://github.com/sharkdp/fd?tab=readme-ov-file#installation
+install nerdfont for icons
