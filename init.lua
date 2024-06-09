@@ -166,14 +166,17 @@ lspconfig.rust_analyzer.setup({
 	capabilities = cmp_capabilities,
 })
 
-local vue_lsp_path = "%AppData%/npm/node_modules/@vue/language-server"
+local mason_registry = require("mason-registry")
+local vue_lsp_path = mason_registry.get_package("vue-language-server"):get_install_path()
+	.. "/node_modules/@vue/language-server"
+--	.. "/node_modules/@vue/typescript-plugin"
 
 lspconfig.tsserver.setup({
 	init_options = {
 		plugins = {
 			{
 				name = "@vue/typescript-plugin",
-				location = vue_language_server_path,
+				location = vue_lsp_path,
 				languages = { "vue" },
 			},
 		},
@@ -185,6 +188,12 @@ lspconfig.tsserver.setup({
 lspconfig.volar.setup({
 	capabilities = cmp_capabilities,
 })
+
+--[[
+lspconfig.tsserver.setup({
+	capabilities = cmp_capabilities,
+})
+--]]
 
 -- KEYMAPS
 
@@ -198,6 +207,6 @@ vim.keymap.set("n", "<leader>p", function()
 	require("conform").format({ async = true, lsp_fallback = true })
 end, { desc = "formatter" })
 
--- COLORSCHEM
+-- COLORSCHEME
 
 vim.cmd("colorscheme habamax")
