@@ -1,6 +1,6 @@
 vim.g.mapleader = " "
-vim.opt.expandtab = true
 vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
 vim.opt.number = true
 
 -- PLUGINS
@@ -98,7 +98,7 @@ require("lazy").setup({
 require("gitsigns").setup()
 require("mason").setup()
 require("mason-lspconfig").setup({
-	ensure_installed = { "lua_ls", "rust_analyzer", "tsserver", "volar", "cssls" },
+	ensure_installed = { "lua_ls", "rust_analyzer", "tsserver", "volar", "cssls", "pyright", "clangd", "html" },
 })
 require("conform").setup({
 	formatters_by_ft = {
@@ -108,6 +108,7 @@ require("conform").setup({
 		rust = { "rustfmt" },
 		typescript = { "prettier" },
 		vue = { "prettier" },
+		html = { "prettier" },
 	},
 })
 
@@ -189,12 +190,17 @@ lspconfig.volar.setup({
 	capabilities = cmp_capabilities,
 })
 
---[[
-lspconfig.tsserver.setup({
+lspconfig.pyright.setup({
 	capabilities = cmp_capabilities,
 })
---]]
 
+lspconfig.clangd.setup({
+	capabilities = cmp_capabilities,
+})
+
+lspconfig.html.setup({
+	capabilities = cmp_capabilities,
+})
 -- KEYMAPS
 
 local telescope_builtin = require("telescope.builtin")
@@ -206,6 +212,8 @@ vim.keymap.set("n", "<leader>lc", ":NvimTreeClose<CR>")
 vim.keymap.set("n", "<leader>p", function()
 	require("conform").format({ async = true, lsp_fallback = true })
 end, { desc = "formatter" })
+vim.keymap.set("n", "<leader>ml", "<C-W>W")
+vim.keymap.set("n", "<leader>mr", "<C-W>w")
 
 -- COLORSCHEME
 
